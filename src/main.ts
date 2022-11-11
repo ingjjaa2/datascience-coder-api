@@ -11,8 +11,6 @@ app.use(express.urlencoded({extended: true}))
 
 app.use(CustomRouter.createRoutes());
 
-console.log("Iniciando")
-
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });

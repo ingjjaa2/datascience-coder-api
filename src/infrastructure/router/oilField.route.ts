@@ -16,7 +16,11 @@ class HealthRoutes {
       const lineJson = {}
       headers.forEach((h,i) => {
         try {
-          lineJson[h]= isNaN(parseFloat(line[i]))?line[i]:parseFloat(line[i])        
+          if(h==="Fecha"){
+            lineJson[h]= line[i] 
+          }else{
+            lineJson[h]= isNaN(parseFloat(line[i]))?line[i]:parseFloat(line[i])        
+          }
         } catch (error) {
           lineJson[h]= line[i]          
         }
@@ -34,7 +38,9 @@ class HealthRoutes {
 
   private getLog = async (req, res) => {
     const {page} = req.query;
-    const subData = this.logs.splice(50*page,50*page+50)
+    const start = 50*page
+    const end = start + 50
+    const subData = this.logs.slice(start,end)
     res.status(200).json({ data:subData, totalRecords:this.logs.length, perPage:50, totalPages:Math.ceil(this.logs.length/50) ,page: parseInt(page) });
   };
 }
